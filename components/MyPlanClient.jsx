@@ -6,24 +6,24 @@ import { ListChecks, Timer, Flame, ArrowRight } from "lucide-react";
 import { usePlan } from "@/context/PlanContext";
 import { useToast } from "@/context/ToastContext";
 import PlanWorkoutRow from "@/components/PlanWorkoutRow";
-import SearchInput from "@/components/SearchInput";
+import SortDropdown from "@/components/SortDropdown";
 import Loader from "@/components/Loader";
+
+const SORT_KEYS = {
+  duration: "duration",
+  calories: "caloriesBurned",
+  rating: "rating",
+};
 
 export default function MyPlanClient() {
   const { plan, saved, hydrated, removeFromPlan, removeFromSaved, markDone } = usePlan();
   const { showToast } = useToast();
   const [tab, setTab] = useState("plan"); // plan | saved
-  const [query, setQuery] = useState("");
+  const [sortBy, setSortBy] = useState("duration");
 
   const fullList = tab === "plan" ? plan : saved;
-  const q = query.trim().toLowerCase();
-  const list = q
-    ? fullList.filter(
-        (w) =>
-          w.name.toLowerCase().includes(q) ||
-          (w.muscleGroups || []).some((tag) => tag.toLowerCase().includes(q))
-      )
-    : fullList;
+  const key = SORT_KEYS[sortBy] || "duration";
+  const list = [...fullList].sort((a, b) => (b[key] ?? 0) - (a[key] ?? 0));
 
   const minutes = plan.reduce((sum, w) => sum + (w.duration || 0), 0);
   const calories = plan.reduce((sum, w) => sum + (w.caloriesBurned || 0), 0);
@@ -69,11 +69,7 @@ export default function MyPlanClient() {
         </div>
         {hydrated && fullList.length > 0 && (
           <div className="pb-3 sm:pb-2">
-            <SearchInput
-              value={query}
-              onChange={setQuery}
-              placeholder="Search by name or tag…"
-            />
+            <SortDropdown value={sortBy} onChange={setSortBy} />
           </div>
         )}
       </div>
@@ -96,14 +92,6 @@ export default function MyPlanClient() {
               Go to workouts
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </div>
-        )}
-
-        {hydrated && fullList.length > 0 && list.length === 0 && (
-          <div className="rounded-xl border border-ink-700 bg-ink-850 py-16 text-center">
-            <p className="text-sm font-semibold text-ink-300">
-              No workouts match &ldquo;{query}&rdquo;.
-            </p>
           </div>
         )}
 

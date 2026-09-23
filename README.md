@@ -56,8 +56,10 @@ survives a refresh.
   (check icon, toggles state + toast) and a Remove (✕) button (toast on removal).
 - **Persistence**: Today's Plan and Saved are mirrored to `localStorage` and
   survive a page reload.
-- **Search**: both the Library grid (Home) and the My Plan / Saved lists can be
-  filtered live by workout name or muscle-group tag.
+- **Search**: the Library grid (Home) can be filtered live by workout name or
+  muscle-group tag.
+- **Sort everywhere**: the "Sort By" (Duration/Calories/Rating) dropdown drives
+  both the Home library grid and the My Plan / Saved lists.
 - **Plan cap**: "Add to today's plan" disables itself once the plan holds 5 lifts.
 
 ## Getting Started
