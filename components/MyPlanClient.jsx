@@ -6,14 +6,24 @@ import { ListChecks, Timer, Flame, ArrowRight } from "lucide-react";
 import { usePlan } from "@/context/PlanContext";
 import { useToast } from "@/context/ToastContext";
 import PlanWorkoutRow from "@/components/PlanWorkoutRow";
+import SearchInput from "@/components/SearchInput";
 import Loader from "@/components/Loader";
 
 export default function MyPlanClient() {
   const { plan, saved, hydrated, removeFromPlan, removeFromSaved, markDone } = usePlan();
   const { showToast } = useToast();
   const [tab, setTab] = useState("plan"); // plan | saved
+  const [query, setQuery] = useState("");
 
-  const list = tab === "plan" ? plan : saved;
+  const fullList = tab === "plan" ? plan : saved;
+  const q = query.trim().toLowerCase();
+  const list = q
+    ? fullList.filter(
+        (w) =>
+          w.name.toLowerCase().includes(q) ||
+          (w.muscleGroups || []).some((tag) => tag.toLowerCase().includes(q))
+      )
+    : fullList;
 
   const minutes = plan.reduce((sum, w) => sum + (w.duration || 0), 0);
   const calories = plan.reduce((sum, w) => sum + (w.caloriesBurned || 0), 0);
@@ -48,19 +58,30 @@ export default function MyPlanClient() {
         <StatCard icon={Flame} label="Calories" value={calories} />
       </div>
 
-      <div className="mt-8 flex gap-2 border-b border-ink-700">
-        <TabButton active={tab === "plan"} onClick={() => setTab("plan")}>
-          Today&apos;s Plan
-        </TabButton>
-        <TabButton active={tab === "saved"} onClick={() => setTab("saved")}>
-          Saved
-        </TabButton>
+      <div className="mt-8 flex flex-col gap-4 border-b border-ink-700 pb-0 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex gap-2">
+          <TabButton active={tab === "plan"} onClick={() => setTab("plan")}>
+            Today&apos;s Plan
+          </TabButton>
+          <TabButton active={tab === "saved"} onClick={() => setTab("saved")}>
+            Saved
+          </TabButton>
+        </div>
+        {hydrated && fullList.length > 0 && (
+          <div className="pb-3 sm:pb-2">
+            <SearchInput
+              value={query}
+              onChange={setQuery}
+              placeholder="Search by name or tag…"
+            />
+          </div>
+        )}
       </div>
 
       <div className="mt-6 flex flex-col gap-3">
         {!hydrated && <Loader label="Loading workouts…" />}
 
-        {hydrated && list.length === 0 && (
+        {hydrated && fullList.length === 0 && (
           <div className="flex flex-col items-center gap-3 rounded-xl border border-ink-700 bg-ink-850 py-20 text-center">
             <h2 className="font-display text-xl font-bold uppercase tracking-wide text-white">
               Nothing here yet
@@ -75,6 +96,14 @@ export default function MyPlanClient() {
               Go to workouts
               <ArrowRight className="h-4 w-4" />
             </Link>
+          </div>
+        )}
+
+        {hydrated && fullList.length > 0 && list.length === 0 && (
+          <div className="rounded-xl border border-ink-700 bg-ink-850 py-16 text-center">
+            <p className="text-sm font-semibold text-ink-300">
+              No workouts match &ldquo;{query}&rdquo;.
+            </p>
           </div>
         )}
 

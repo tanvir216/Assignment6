@@ -47,6 +47,19 @@ survives a refresh.
 7. **Polish** — custom 404 page, graceful loading states on every data fetch,
    and toast notifications for every plan/saved action.
 
+## Challenge Requirements Covered
+
+- **C1 — Sort dropdown**: "Sort By" (Duration / Calories / Rating, default Duration,
+  chevron icon) re-sorts the currently visible list on the Home page.
+- **C2 — README**: this file — project name, description, tech stack, and key features.
+- **C3 — Plan card actions**: every planned workout has a "Mark as Done" button
+  (check icon, toggles state + toast) and a Remove (✕) button (toast on removal).
+- **Persistence**: Today's Plan and Saved are mirrored to `localStorage` and
+  survive a page reload.
+- **Search**: both the Library grid (Home) and the My Plan / Saved lists can be
+  filtered live by workout name or muscle-group tag.
+- **Plan cap**: "Add to today's plan" disables itself once the plan holds 5 lifts.
+
 ## Getting Started
 
 ```bash
