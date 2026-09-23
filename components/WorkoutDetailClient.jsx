@@ -52,7 +52,7 @@ export default function WorkoutDetailClient() {
 
   const planned = isInPlan(workout.id);
   const savedAlready = isSaved(workout.id);
-  const planDisabled = planned || (isPlanFull && !planned);
+  const planDisabled = isPlanFull && !planned;
 
   const handleAddToPlan = () => {
     const result = addToPlan(workout);
@@ -150,7 +150,6 @@ export default function WorkoutDetailClient() {
             </button>
             <button
               onClick={handleSave}
-              disabled={savedAlready}
               className="flex items-center gap-2 rounded-lg border border-ink-500 px-5 py-3 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Bookmark className="h-4 w-4" />
