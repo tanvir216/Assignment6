@@ -29,7 +29,7 @@ export default function HomeClient() {
   if (status === "loading") {
     return (
       <>
-        <Hero heroImage={null} />
+        <Hero heroImage="/banner.png" />
         <Loader label="Loading workouts…" />
       </>
     );
@@ -37,7 +37,7 @@ export default function HomeClient() {
 
   return (
     <>
-      <Hero heroImage={workouts[0]?.image} />
+      <Hero heroImage="/banner.png" />
       <LibrarySection workouts={workouts} status={status} />
     </>
   );

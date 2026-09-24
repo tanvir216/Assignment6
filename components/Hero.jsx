@@ -34,11 +34,11 @@ export default function Hero({ heroImage }) {
               alt="FitLog workout illustration"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
+              className="object-contain p-8 sm:p-12"
               priority
             />
           )}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/60 via-transparent to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/40 via-transparent to-transparent" />
         </div>
       </div>
     </section>
