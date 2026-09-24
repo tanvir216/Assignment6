@@ -18,7 +18,7 @@ const SORT_KEYS = {
 export default function MyPlanClient() {
   const { plan, saved, hydrated, removeFromPlan, removeFromSaved, markDone } = usePlan();
   const { showToast } = useToast();
-  const [tab, setTab] = useState("plan"); // plan | saved
+  const [tab, setTab] = useState("plan");
   const [sortBy, setSortBy] = useState("duration");
 
   const fullList = tab === "plan" ? plan : saved;

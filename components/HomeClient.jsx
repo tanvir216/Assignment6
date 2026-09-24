@@ -8,7 +8,7 @@ import Loader from "@/components/Loader";
 
 export default function HomeClient() {
   const [workouts, setWorkouts] = useState([]);
-  const [status, setStatus] = useState("loading"); // loading | error | ready
+  const [status, setStatus] = useState("loading");
 
   useEffect(() => {
     let cancelled = false;

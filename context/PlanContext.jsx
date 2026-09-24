@@ -23,7 +23,7 @@ function writeStorage(key, value) {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
   } catch {
-    // storage full or unavailable - fail silently, in-memory state still works
+   
   }
 }
 

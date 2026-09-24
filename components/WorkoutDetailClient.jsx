@@ -24,7 +24,7 @@ export default function WorkoutDetailClient() {
   const { addToPlan, addToSaved, isInPlan, isSaved, isPlanFull } = usePlan();
   const { showToast } = useToast();
   const [workout, setWorkout] = useState(null);
-  const [status, setStatus] = useState("loading"); // loading | error | ready
+  const [status, setStatus] = useState("loading"); 
 
   useEffect(() => {
     let cancelled = false;
